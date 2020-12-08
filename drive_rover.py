@@ -93,7 +93,7 @@ fps = None
 def telemetry(sid, data):
 
     global frame_counter, second_counter, fps
-    global recording_command = []
+    global recording_command
     frame_counter+=1
     # Do a rough calculation of frames per second (FPS)
     if (time.time() - second_counter) > 1:
@@ -148,9 +148,11 @@ def telemetry(sid, data):
             image_filename = os.path.join(args.image_folder, timestamp)
             image.save('{}.jpg'.format(image_filename))
 
+
+
             ####################################################################
             # new code added
-            directory = ""  ######## change that! ########
+            directory = "C:\\Users\\brian\\Downloads\\RoboND-Python-StarterKit\\RoboND-Rover-Project\\gitcopy\\EC500_project\\data"  #
             
             command_filename = os.path.join(directory, '/action')
             command_filename = os.path.join(command_filename, timestamp)
@@ -158,8 +160,12 @@ def telemetry(sid, data):
             obs_filename = os.path.join(obs_filename, timestamp)
 
             # hw1 save format
-            np.save(data_folder + '/action_' + '%05d' % index + '.npy', recording_command)
-            np.save(data_folder + '/observation_' + '%05d' % index + '.npy', Rover.img)
+            #np.save(data_folder + '/action_' + '%05d' % index + '.npy', recording_command)
+            #recording_command.save(‘{}.npy’.format(command_filename))
+            np.save(obs_filename + '.npy', Rover.img)
+            #np.save(‘{}.npy’.format(obs_filename))
+            print("Size of image: ", Rover.img.size)
+            #np.save(data_folder + '/observation_' + '%05d' % index + '.npy', Rover.img)
             # printf("Image size:")
             ####################################################################
 
