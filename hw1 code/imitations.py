@@ -4,7 +4,8 @@ import numpy as np
 import gym
 from pyglet.window import key
 
-import pandas as pd     # added by [hrsun]
+# added
+import pandas as pd
 from PIL import Image
 
 
