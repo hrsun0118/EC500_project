@@ -8,7 +8,6 @@ from pyglet.window import key
 import pandas as pd
 from PIL import Image
 
-
 def load_imitations(data_folder):
     """
     Given the folder containing the expert imitations, the data gets loaded and
