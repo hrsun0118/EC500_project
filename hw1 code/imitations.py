@@ -20,48 +20,23 @@ def load_imitations(data_folder):
     observations:   python list of N numpy.ndarrays of size (96, 96, 3)
     actions:        python list of N numpy.ndarrays of size 3
     """
-    # file paths
-    act_file_name = os.listdir(data_folder + 'robot_log.csv')
-    obs_files = os.listdir(data_folder + '/IMG/')
-
-    # create list
-    observations = [0]*int(len(obs_files))
-    # actions = [0]*int(len(obs_files))
-
-    # Parse action csv file
-    # 1. read csv file
-    # 2. For loop
-    #   split csv file line by line
-    #   take only data @ index = [1,2,3] = [steer, throttle, brake]
-    #   convert it into a 1-D numpy array & add to a 2D "action" numpy array
-
     # get actions
-    csv_file = pd.read_csv(act_file_name, sep=';',header=None)
+    csv_file = pd.read_csv(data_folder+'robot_log.csv', sep=';',header=None)
     csv_arr = csv_file.values
-    actions = np.asarray(csv_arr[:, 1:3])
-    print("actions" + actions)
+    actions = np.asarray(csv_arr[:, 1:4])
+    print("actions[0]: ", actions[0], "; action[1]:", actions[1])
 
     # get observations
+    obs_files = os.listdir(data_folder + '/IMG/')
+    observations = [0]*int(len(obs_files))  # create list
     index = 0
     for filename in obs_files:  # loop through all files
-        # file = np.load(filename)    # load file
-        observations[index] = numpy.asarray(Image.open(filename))
+        open_file_name = os.path.join(os.path.join(data_folder + '/IMG/'), filename)
+        observations[index] = np.asarray(Image.open(open_file_name))
         index += 1
-
+    observations = np.asarray(observations)
     print("observations[0]: ", observations[0])
-
-    """
-    for file in files:
-        species = file.split('_', 1)[0]
-        number = file.split('_', 1)[1].split('.', 1)[0]
-        if species == 'observation':
-            observations[int(number)] = np.load(data_folder + '/observation_' + number + '.npy')
-        elif species == 'action':
-            actions[int(number)] = np.load(data_folder + '/action_' + number + '.npy')
-
-    observations = [i for i in observations if np.size(i) != 1]
-    actions = [j for j in actions if np.size(j) != 1]
-    """
+    # print("observations[0] shape: ", observations[0].shape)
 
     return observations, actions
 
@@ -162,5 +137,5 @@ def record_imitations(imitations_folder):
 
 
 # following code is for testing purpose only, need to be commented out later
-# data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/HW/HW1_imitation'
-# load_imitations(data_folder)
+data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/Project/Github Simulation/EC500_project/data/'
+load_imitations(data_folder)
