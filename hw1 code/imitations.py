@@ -4,6 +4,9 @@ import numpy as np
 import gym
 from pyglet.window import key
 
+import pandas as pd     # added by [hrsun]
+from PIL import Image
+
 
 def load_imitations(data_folder):
     """
@@ -17,10 +20,37 @@ def load_imitations(data_folder):
     observations:   python list of N numpy.ndarrays of size (96, 96, 3)
     actions:        python list of N numpy.ndarrays of size 3
     """
-    files = os.listdir(data_folder)    
-    observations = [0]*int(len(files))
-    actions = [0]*int(len(files))
+    # file paths
+    act_file_name = os.listdir(data_folder + 'robot_log.csv')
+    obs_files = os.listdir(data_folder + '/IMG/')
 
+    # create list
+    observations = [0]*int(len(obs_files))
+    # actions = [0]*int(len(obs_files))
+
+    # Parse action csv file
+    # 1. read csv file
+    # 2. For loop
+    #   split csv file line by line
+    #   take only data @ index = [1,2,3] = [steer, throttle, brake]
+    #   convert it into a 1-D numpy array & add to a 2D "action" numpy array
+
+    # get actions
+    csv_file = pd.read_csv(act_file_name, sep=';',header=None)
+    csv_arr = csv_file.values
+    actions = np.asarray(csv_arr[:, 1:3])
+    print("actions" + actions)
+
+    # get observations
+    index = 0
+    for filename in obs_files:  # loop through all files
+        # file = np.load(filename)    # load file
+        observations[index] = numpy.asarray(Image.open(filename))
+        index += 1
+
+    print("observations[0]: ", observations[0])
+
+    """
     for file in files:
         species = file.split('_', 1)[0]
         number = file.split('_', 1)[1].split('.', 1)[0]
@@ -31,6 +61,7 @@ def load_imitations(data_folder):
 
     observations = [i for i in observations if np.size(i) != 1]
     actions = [j for j in actions if np.size(j) != 1]
+    """
 
     return observations, actions
 
@@ -128,3 +159,8 @@ def record_imitations(imitations_folder):
 
         status.stop = False
         env.close()
+
+
+# following code is for testing purpose only, need to be commented out later
+# data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/HW/HW1_imitation'
+# load_imitations(data_folder)
