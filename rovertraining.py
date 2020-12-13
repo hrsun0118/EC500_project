@@ -13,7 +13,7 @@ def train(data_folder, trained_network_file):
 
     infer_action.cuda()
 
-    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-5) 
+    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-5)
     # lr change from 1e-2 to 1e-5
     # Optimizer : Adam and SGD and RMSprop(For 4 classes)
     observations, actions = load_imitations(data_folder)
@@ -45,7 +45,7 @@ def train(data_folder, trained_network_file):
                                          (-1, 160, 320, 3))
                 batch_gt = torch.reshape(torch.cat(batch_gt, dim=0),
                                          (-1, number_of_classes))
-                
+
                 batch_out = infer_action(batch_in)
                 # Three loss functions can be choise,
                 loss = cross_entropy_loss(batch_out, batch_gt)
@@ -82,7 +82,10 @@ def cross_entropy_loss(batch_out, batch_gt):
     criterion = torch.nn.CrossEntropyLoss()
     target = torch.argmax(batch_gt, 1)
     loss = criterion(batch_out, target)
-
     return loss
 
-
+directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project>\\"  ######## change that! ########
+# directory = "C:\\Users\\brian\\Downloads\\RoboND-Python-StarterKit\\RoboND-Rover-Project\\gitcopy\\EC500_project\\"
+trained_network_file = os.path.join(directory, 'train.t7')
+imitations_folder = directory
+train(imitations_folder, trained_network_file)
