@@ -10,15 +10,16 @@ from PIL import Image
 
 def load_imitations(data_folder):
     """
-    1.1 a)
     Given the folder containing the expert imitations, the data gets loaded and
     stored it in two lists: observations and actions.
-                    N = number of (observation, action) - pairs
-    data_folder:    python string, the path to the folder containing the
-                    observation_%05d.npy and action_%05d.npy files
+
+    Parameter:
+        data_folder: python string, the path to the folder containing the
+                    actions csv files & observations jpg files
     return:
-    observations:   python list of N numpy.ndarrays of size (96, 96, 3)
-    actions:        python list of N numpy.ndarrays of size 3
+        observations:   python list of N numpy.ndarrays of size (160, 320, 3)
+        actions:        python list of N numpy.ndarrays of size 3
+        (N = number of (observation, action) - pairs)
     """
     # get actions
     csv_file = pd.read_csv(data_folder+'robot_log.csv', sep=';',header=None)
