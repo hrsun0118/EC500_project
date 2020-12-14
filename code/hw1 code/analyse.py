@@ -5,8 +5,9 @@ from imitations import load_imitations
 
 
 def plot_acc(data1, name):
-    acc1 = np.load(data1, allow_pickle = True)
-
+    acc1 = np.load(data1, allow_pickle = True)  # why "allow_pickle = True"
+                                                # (online: “Pickling” is the process whereby
+                                                # a Python object hierarchy is converted into a byte stream)
     plt.figure()
     plt.plot(range(len(acc1)), acc1, label=name)
 
@@ -17,45 +18,45 @@ def plot_acc(data1, name):
     # plt.show()
     plt.savefig('images/'+str(name)+'.png')
 
-# plot_acc('result/easy_gray.npy', 'MyNet')
+# plot_acc('result/easy_gray.npy', 'MyNet')     # do we only need to put easy_gray.npy file in the "result" folder?
 
 def data_analyse_seven(data_folder):
     observations, actions = load_imitations(data_folder)
-    left, left_break, right, right_break, acc, breaks, keep = 0,0,0,0,0,0,0
-    for action in actions:
-        if action[0] < 0 and action[2] == 0:       # left      
+    left, left_throttle, right, right_throttle, acc, brakes, keep = 0,0,0,0,0,0,0
+    for action in actions: # [steer, throttle, brake]
+        if action[0] > 0 and action[1] == 0:       # left
             left += 1
-        elif action[0] < 0 and action[2] > 0:      # left break     
-            left_break += 1
-        elif action[0] > 0 and action[2] == 0:     # right      
+        elif action[0] > 0 and action[1] > 0:      # left throttle
+            left_throttle += 1
+        elif action[0] < 0 and action[1] == 0:     # right
             right += 1
-        elif action[0] > 0 and action[2] > 0:      # right break     
-            right_break += 1
-        elif action[0] == 0 and action[1] > 0:     # accelerate
+        elif action[0] > 0 and action[1] > 0:      # right throttle
+            right_throttle += 1
+        elif action[0] == 0 and action[1] > 0:     # throttle - accelerate
             acc += 1
-        elif action[0] == 0 and action[2] > 0:     # break
-            breaks += 1
-        elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep
-            keep += 1
-    summ = left+left_break+right+right_break+acc+breaks+keep
+        elif action[0] == 0 and action[2] > 0:     # brake
+            brakes += 1
+        # elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep   #  why do we need "keep" folder?
+        #     keep += 1
+    summ = left+left_throttle+right+right_throttle+acc+brakes   # +keep
     print("====================================================")
     print("----------- Data pairs in total =", str(len(actions)), "------------")
     print("----------- Data pairs be used =", str(summ), "-------------")
     print("====================================================")
     print("Left = ", left)
-    print("Left_break = ", left_break)
+    print("Left_throttle = ", left_brake)
     print("Right = ", right)
-    print("Right_break = ", right_break)
+    print("Right_throttle = ", right_brake)
     print("Accelerate = ", acc)
-    print("Break = ", breaks)
-    print("Keep = ", keep)
+    print("Break = ", brakes)
+    # print("Keep = ", keep)
     print("====================================================")
 
 def data_analyse_four(data_folder):
     observations, actions = load_imitations(data_folder)
-    left, right, acc, breaks = 0,0,0,0
+    left, right, acc, brakes = 0,0,0,0
     for action in actions:
-        if action[0] < 0:         
+        if action[0] < 0:
             right += 1       # right
         elif action[0] > 0:
             left += 1        # left
@@ -63,8 +64,8 @@ def data_analyse_four(data_folder):
             if action[1] > 0:
                 acc += 1     # gas
             elif action[1] ==0 and action[2] > 0:
-                breaks += 1  # brake
-    summ = left+right+acc+breaks
+                brakes += 1  # brake
+    summ = left+right+acc+brakes
     print("====================================================")
     print("----------- Data pairs in total =", str(len(actions)), "------------")
     print("----------- Data pairs be used =", str(summ), "-------------")
@@ -72,49 +73,49 @@ def data_analyse_four(data_folder):
     print("Left = ", left)
     print("Right = ", right)
     print("Accelerate = ", acc)
-    print("Break = ", breaks)
+    print("Break = ", brakes)
     print("====================================================")
 
 def data_analyse_nine(data_folder):
     observations, actions = load_imitations(data_folder)
-    left, left_break, left_break_gas, \
-    right, right_break, right_break_gas, \
-    acc, breaks, keep = 0,0,0,0,0,0,0,0,0
+    left, left_brake, left_brake_gas, \
+    right, right_brake, right_brake_gas, \
+    acc, brakes, keep = 0,0,0,0,0,0,0,0,0
 
     for action in actions:
         if action[0] < 0 and action[1] > 0:
-            left_break_gas+=1    # steering left and gas          
+            left_brake_gas+=1    # steering left and gas
         elif action[0] < 0 and action[1] ==0 and action[2] ==0:
             left+=1              # steering left
         elif action[0] < 0 and action[1] ==0 and action[2] > 0:
-            left_break+=1        # steering left and brake
+            left_brake+=1        # steering left and brake
 
         elif action[0] > 0 and action[1] > 0:
-            right_break_gas+=1    # steering right and gas
+            right_brake_gas+=1    # steering right and gas
         elif action[0] > 0 and action[1] ==0 and action[2] ==0:
             right+=1              # steering right
         elif action[0] > 0 and action[1] ==0 and action[2] > 0:
-            right_break+=1        # steering right and brake
+            right_brake+=1        # steering right and brake
 
         elif action[0] == 0 and action[1] == 0 and action[2] == 0:
             keep+=1               # keep forward
         elif action[0] == 0 and action[2] > 0:
-            breaks+=1             # brake
+            brakes+=1             # brake
         elif action[0] == 0 and action[1] > 0 and action[2] == 0:
             acc+=1                # gas
-    summ = left+left_break+left_break_gas+right+right_break+right_break_gas+acc+breaks+keep
+    summ = left+left_brake+left_brake_gas+right+right_brake+right_brake_gas+acc+brakes+keep
     print("====================================================")
     print("----------- Data pairs in total =", str(len(actions)), "------------")
     print("----------- Data pairs be used =", str(summ), "-------------")
     print("====================================================")
     print("Left = ", left)
-    print("Left_break = ", left_break)
-    print("Left_break_gas = ", left_break_gas)
+    print("Left_brake = ", left_brake)
+    print("Left_brake_gas = ", left_brake_gas)
     print("Right = ", right)
-    print("Right_break_gas = ", right_break_gas)
-    print("Left_break = ", left_break)
+    print("Right_brake_gas = ", right_brake_gas)
+    print("Left_brake = ", left_brake)
     print("Accelerate = ", acc)
-    print("Break = ", breaks)
+    print("Break = ", brakes)
     print("Keep = ", keep)
     print("====================================================")
 
