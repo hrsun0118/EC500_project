@@ -151,9 +151,10 @@ def telemetry(sid, data):
 
 
             ####################################################################
+            """
             # new code added
             directory = "C:\\Users\\brian\\Downloads\\RoboND-Python-StarterKit\\RoboND-Rover-Project\\gitcopy\\EC500_project\\data"  #
-            
+
             command_filename = os.path.join(directory, '/action')
             command_filename = os.path.join(command_filename, timestamp)
             obs_filename = os.path.join(directory, '/observation')
@@ -167,6 +168,7 @@ def telemetry(sid, data):
             print("Size of image: ", Rover.img.size)
             #np.save(data_folder + '/observation_' + '%05d' % index + '.npy', Rover.img)
             # printf("Image size:")
+            """
             ####################################################################
 
     else:
