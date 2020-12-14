@@ -36,9 +36,9 @@ def data_analyse_seven(data_folder):
             acc += 1
         elif action[0] == 0 and action[2] > 0:     # brake
             brakes += 1
-        # elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep   #  why do we need "keep" folder?
-        #     keep += 1
-    summ = left+left_throttle+right+right_throttle+acc+brakes   # +keep
+        elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep   #  why do we need "keep" folder?
+            keep += 1
+    summ = left+left_throttle+right+right_throttle+acc+brakes+keep
     print("====================================================")
     print("----------- Data pairs in total =", str(len(actions)), "------------")
     print("----------- Data pairs be used =", str(summ), "-------------")
@@ -49,7 +49,7 @@ def data_analyse_seven(data_folder):
     print("Right_throttle = ", right_brake)
     print("Accelerate = ", acc)
     print("Break = ", brakes)
-    # print("Keep = ", keep)
+    print("Keep = ", keep)
     print("====================================================")
 
 # data_analyse_seven('data/teacher')
