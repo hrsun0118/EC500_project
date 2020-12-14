@@ -11,9 +11,9 @@ trained_network_file = os.path.join(directory, 'data\\train.t7')
 # commands based on the output of the perception_step() function
 def decision_step(Rover):
     # update action based on current observation
-    infer_action = torch.load(trained_network_file, map_location='cpu')
+    infer_action = torch.load(trained_network_file, map_location='cuda') # original 'cpu'
     infer_action.eval()
-    device = torch.device('cuda')
+    device = torch.device('cuda')   # ofiginal 'cpu'
     infer_action = infer_action.to(device)
     observation = Rover.img
     action_scores = infer_action(torch.Tensor(

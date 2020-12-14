@@ -14,7 +14,7 @@ def train(data_folder, trained_network_file):
 
     infer_action.cuda()
 
-    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-5)
+    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-4)    # original:1e-5
     # lr change from 1e-2 to 1e-5
     # Optimizer : Adam and SGD and RMSprop(For 4 classes)
     observations, actions = load_imitations(data_folder)
