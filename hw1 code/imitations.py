@@ -42,5 +42,6 @@ def load_imitations(data_folder):
     return observations, actions
 
 # following code is for testing purpose only, need to be commented out later
-data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/Project/Github Simulation/EC500_project/data/'
-load_imitations(data_folder)
+# macbook data_folder path
+# data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/Project/Github Simulation/EC500_project/data/'
+# load_imitations(data_folder)
