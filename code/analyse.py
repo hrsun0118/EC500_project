@@ -1,7 +1,7 @@
 # Copyright (c) 2020 Yanyu Zhang zhangya@bu.edu All rights reserved.
 import numpy as np
 import matplotlib.pyplot as plt
-from imitations import load_imitations
+from roverimitations import load_imitations
 
 
 def plot_acc(data1, name):
