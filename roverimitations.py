@@ -1,7 +1,5 @@
 import os
 import numpy as np
-import gym
-from pyglet.window import key
 
 # added
 import pandas as pd
@@ -23,11 +21,13 @@ def load_imitations(data_folder):
     # get actions
     csv_file = pd.read_csv(data_folder+'robot_log.csv', sep=';',header=None)
     csv_arr = csv_file.values
-    actions = np.asarray(csv_arr[:, 1:4])
+    actions = np.asarray(csv_arr[:, 1:4], dtype=np.float16)
     print("actions[0]: ", actions[0], "; action[1]:", actions[1])
 
+    print(actions.dtype)
+
     # get observations
-    obs_files = os.listdir(data_folder + '/IMG/')
+    obs_files = os.listdir(data_folder + '\\IMG\\')
     observations = [0]*int(len(obs_files))  # create list
     index = 0
     for filename in obs_files:  # loop through all files
@@ -41,5 +41,5 @@ def load_imitations(data_folder):
     return observations, actions
 
 # following code is for testing purpose only, need to be commented out later
-data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/Project/Github Simulation/EC500_project/data/'
-load_imitations(data_folder)
+# data_folder = '/Users/hairuosun/Library/Mobile Documents/com~apple~CloudDocs/BU/Fall 2020/Courses/EC 500 A2/Project/Github Simulation/EC500_project/data/'
+# load_imitations(data_folder)

@@ -1,7 +1,8 @@
 import torch
 import random
 import time
-from rovernetwork import ClassificationNetwork
+import os
+from rovernet import ClassificationNetwork
 from roverimitations import load_imitations
 import numpy as np
 
@@ -84,8 +85,8 @@ def cross_entropy_loss(batch_out, batch_gt):
     loss = criterion(batch_out, target)
     return loss
 
-directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project>\\"  ######## change that! ########
+directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project\\"  ######## change that! ########
 # directory = "C:\\Users\\brian\\Downloads\\RoboND-Python-StarterKit\\RoboND-Rover-Project\\gitcopy\\EC500_project\\"
 trained_network_file = os.path.join(directory, 'train.t7')
-imitations_folder = directory
+imitations_folder = os.path.join(directory, 'data\\')
 train(imitations_folder, trained_network_file)

@@ -11,10 +11,12 @@ class ClassificationNetwork(torch.nn.Module):
         """
         super().__init__()
 
-        if torch.cuda.is_available(): 
-            dev = "cuda:0" 
-        else:  
+        if torch.cuda.is_available():
+            dev = "cuda" #"cuda:0"
+            print("working on gpu")
+        else:
             dev = "cpu"
+            print("working on cpu")
 
         device = torch.device(dev)
 
@@ -25,7 +27,7 @@ class ClassificationNetwork(torch.nn.Module):
         self.conv2 = nn.Conv2d(16, 32, 3, stride=2)
         self.act = nn.ReLU()
         self.drop = nn.Dropout(0.5)
-        self.fc1 = nn.Linear(3872, 128)
+        self.fc1 = nn.Linear(23712, 128)
         self.fc2 = nn.Linear(128, 6)
 
     def normalization(self, x):
@@ -54,7 +56,7 @@ class ClassificationNetwork(torch.nn.Module):
         # rgb2gray = 0.2989*observation[:, :, :, 0] + \
         #            0.5870*observation[:, :, :, 1] + \
         #            0.1140*observation[:, :, :, 2]
-            
+
         x = torch.reshape(observation, (-1, 160, 320, 3))
         #x = x.permute(0, 3, 1, 2)
         #=================================================================
@@ -65,19 +67,19 @@ class ClassificationNetwork(torch.nn.Module):
         #=================================================================
         # EasyNet for 7 classes
         x = observation.permute(0, 3, 1, 2)
-        x = self.act(self.conv1(x)) 
+        x = self.act(self.conv1(x))
         x = self.drop(x)
         x = self.act(self.conv2(x))
         x = self.drop(x)
 
         #check input to linear layer
-        print("shape: "x.shape())
+        # print("shape: ", x.size(0))
 
         x = x.reshape(x.size(0), -1)
         # x = torch.cat([x, extract_input], dim=1)  # uncommand line 175,176 before
         x = self.fc1(x)
         x = self.fc2(x)
-     
+
         return x
 
     def actions_to_classes(self, actions):
@@ -94,16 +96,16 @@ class ClassificationNetwork(torch.nn.Module):
         movement = []
         # Eight Classes Classification [steering, throttle, brake]
         for action in actions:
-            if action[0] == 0 and action[1] > 0:                         # throttle     
+            if action[0] == 0 and action[1] > 0:                         # throttle
                 movement.append(torch.Tensor([1, 0, 0, 0, 0, 0]))
-            elif action[0] == 0 and action[2] > 0:                        # brake     
+            elif action[0] == 0 and action[2] > 0:                        # brake
                 movement.append(torch.Tensor([0, 1, 0, 0, 0, 0]))
-            elif action[0] > 0 and action[1] == 0:                       # left      
+            elif action[0] > 0 and action[1] == 0:                       # left
                 movement.append(torch.Tensor([0, 0, 1, 0, 0, 0]))
-            elif action[0] < 0 and action[1] == 0:                        # right     
-                movement.append(torch.Tensor([0, 0, 0, 1, 0, 0]))   
+            elif action[0] < 0 and action[1] == 0:                        # right
+                movement.append(torch.Tensor([0, 0, 0, 1, 0, 0]))
             elif action[0] > 0 and action[1] > 0:                       # throttle left
-                movement.append(torch.Tensor([0, 0, 0, 0, 1, 0])) 
+                movement.append(torch.Tensor([0, 0, 0, 0, 1, 0]))
             elif action[0] < 0 and action[1] > 0:                       # throttle right
                 movement.append(torch.Tensor([0, 0, 0, 0, 0, 1]))
         #=================================================================
