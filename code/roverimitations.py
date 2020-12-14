@@ -22,9 +22,9 @@ def load_imitations(data_folder):
     csv_file = pd.read_csv(data_folder+'robot_log.csv', sep=';',header=None)
     csv_arr = csv_file.values
     actions = np.asarray(csv_arr[:, 1:4], dtype=np.float16)
-    print("actions[0]: ", actions[0], "; action[1]:", actions[1])
+    #print("actions[0]: ", actions[0], "; action[1]:", actions[1])
 
-    print(actions.dtype)
+    #print(actions.dtype)
 
     # get observations
     obs_files = os.listdir(data_folder + '\\IMG\\')
@@ -35,7 +35,7 @@ def load_imitations(data_folder):
         observations[index] = np.asarray(Image.open(open_file_name))
         index += 1
     observations = np.asarray(observations)
-    print("observations[0]: ", observations[0])
+    #print("observations[0]: ", observations[0])
     # print("observations[0] shape: ", observations[0].shape)
 
     return observations, actions

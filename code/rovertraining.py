@@ -87,6 +87,6 @@ def cross_entropy_loss(batch_out, batch_gt):
 
 directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project\\code\\"  ######## change that! ########
 # directory = "C:\\Users\\brian\\Downloads\\RoboND-Python-StarterKit\\RoboND-Rover-Project\\gitcopy\\EC500_project\\"
-trained_network_file = os.path.join(directory, 'train.t7')
+trained_network_file = os.path.join(directory, 'data\\train.t7')
 imitations_folder = os.path.join(directory, 'data\\')
 train(imitations_folder, trained_network_file)
