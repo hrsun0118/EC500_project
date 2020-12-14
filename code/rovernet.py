@@ -28,7 +28,7 @@ class ClassificationNetwork(torch.nn.Module):
         self.act = nn.ReLU()
         self.drop = nn.Dropout(0.5)
         self.fc1 = nn.Linear(23712, 128)
-        self.fc2 = nn.Linear(128, 6)
+        self.fc2 = nn.Linear(128, 7)    # modified to 7 classes
 
     def normalization(self, x):
         """
@@ -97,17 +97,19 @@ class ClassificationNetwork(torch.nn.Module):
         # Eight Classes Classification [steering, throttle, brake]
         for action in actions:
             if action[0] == 0 and action[1] > 0:                         # throttle
-                movement.append(torch.Tensor([1, 0, 0, 0, 0, 0]))
+                movement.append(torch.Tensor([1, 0, 0, 0, 0, 0, 0]))
             elif action[0] == 0 and action[2] > 0:                        # brake
-                movement.append(torch.Tensor([0, 1, 0, 0, 0, 0]))
+                movement.append(torch.Tensor([0, 1, 0, 0, 0, 0, 0]))
             elif action[0] > 0 and action[1] == 0:                       # left
-                movement.append(torch.Tensor([0, 0, 1, 0, 0, 0]))
+                movement.append(torch.Tensor([0, 0, 1, 0, 0, 0, 0]))
             elif action[0] < 0 and action[1] == 0:                        # right
-                movement.append(torch.Tensor([0, 0, 0, 1, 0, 0]))
+                movement.append(torch.Tensor([0, 0, 0, 1, 0, 0, 0]))
             elif action[0] > 0 and action[1] > 0:                       # throttle left
-                movement.append(torch.Tensor([0, 0, 0, 0, 1, 0]))
+                movement.append(torch.Tensor([0, 0, 0, 0, 1, 0, 0]))
             elif action[0] < 0 and action[1] > 0:                       # throttle right
-                movement.append(torch.Tensor([0, 0, 0, 0, 0, 1]))
+                movement.append(torch.Tensor([0, 0, 0, 0, 0, 1, 0]))
+            elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep - modified to 7 classes
+                movement.append(torch.Tensor([0, 0, 0, 0, 0, 0, 1]))
         #=================================================================
         return movement
 
@@ -134,5 +136,7 @@ class ClassificationNetwork(torch.nn.Module):
             action = [15.0, 1.0, 0.0] # throttle left
         elif max_index == 5:
             action = [-15.0, 1.0, 0.0] # throttle right
+        elif max_index == 6:
+            action = [0.0, 0.0, 0.0]     # keep - modified to 7 classes
         #=================================================================
         return float(action[0]), float(action[1]), float(action[2])
