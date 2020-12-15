@@ -78,6 +78,7 @@ def perspect_transform(img, src, dst):
     mask = cv2.warpPerspective(np.ones_like(img[:,:,0]), M, (img.shape[1], img.shape[0]))
     return warped, mask
 
+def find_rocks()
 
 # Apply the above functions in succession and update the Rover state accordingly
 def perception_step(Rover):
@@ -95,6 +96,7 @@ def perception_step(Rover):
     # is not the position of the rover but a bit in front of it
     # this is just a rough guess, feel free to change it!
     bottom_offset = 6
+    image = Rover.img
     source = np.float32([[14, 140], [301 ,140],[200, 96], [118, 96]])
     destination = np.float32([[image.shape[1]/2 - dst_size, image.shape[0] - bottom_offset],
                       [image.shape[1]/2 + dst_size, image.shape[0] - bottom_offset],
@@ -133,7 +135,7 @@ def perception_step(Rover):
     # Update Rover pixel distances and angles
         # Rover.nav_dists = rover_centric_pixel_distances
         # Rover.nav_angles = rover_centric_angles
-    Rover.nav_angles = nav_angles
+    Rover.nav_angles = angles
 
     # See if we can find some rocks
     rock_map = find_rocks(warped, levels = (110, 110, 50))
