@@ -78,7 +78,15 @@ def perspect_transform(img, src, dst):
     mask = cv2.warpPerspective(np.ones_like(img[:,:,0]), M, (img.shape[1], img.shape[0]))
     return warped, mask
 
-def find_rocks()
+def find_rocks(img, levels=(110, 110, 50)):
+    rockpix = ((img[:,:,0] > levels[0]) \
+                & (img[:,:,1] > levels[1]) \
+                & (img[:,:,2] < levels[2]))
+
+    color_select = np.zeros_like(img[:,:,0])
+    color_select[rockpix] = 1
+
+    return color_select
 
 # Apply the above functions in succession and update the Rover state accordingly
 def perception_step(Rover):
