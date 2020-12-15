@@ -147,7 +147,7 @@ def perception_step(Rover):
 
     # See if we can find some rocks
     rock_map = find_rocks(warped, levels = (110, 110, 50))
-    if rock.map.any():
+    if rock_map.any():
         rock_x, rock_y = rover_coords(rock_map)
         rock_x_world, rock_y_world = pix_to_world(rock_x, rock_y, Rover.pos[0],
                                                     Rover.pos[1], Rover.yaw, world_size, scale)
