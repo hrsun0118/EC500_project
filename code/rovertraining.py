@@ -27,7 +27,7 @@ def train(data_folder, trained_network_file):
 
     nr_epochs = 150
     batch_size = 64
-    number_of_classes = 6  # needs to be changed  4/7/9
+    number_of_classes = 7  # needs to be changed  4/7/9
     start_time = time.time()
     loss_print = []   # add a list to record and print the loss later
 

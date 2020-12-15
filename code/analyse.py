@@ -44,12 +44,13 @@ def data_analyse_seven(data_folder):
     print("----------- Data pairs be used =", str(summ), "-------------")
     print("====================================================")
     print("Left = ", left)
-    print("Left_throttle = ", left_brake)
+    print("Left_throttle = ", left_throttle)
     print("Right = ", right)
-    print("Right_throttle = ", right_brake)
+    print("Right_throttle = ", right_throttle)
     print("Accelerate = ", acc)
     print("Break = ", brakes)
     print("Keep = ", keep)
     print("====================================================")
 
-# data_analyse_seven('data/teacher')
+data_directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project\\code\\data\\"
+data_analyse_seven(data_directory)
