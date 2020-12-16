@@ -21,7 +21,7 @@ def train(data_folder, trained_network_file):
     observations, actions = load_imitations(data_folder)
     #========================================================================
     #NEW CODE
-    #observations, actions = data_reduce(data_folder)
+    observations, actions = data_reduce(data_folder)
     #=========================================================================
     observations = [torch.Tensor(observation) for observation in observations]
     actions = [torch.Tensor(action) for action in actions]

@@ -14,7 +14,7 @@ def data_reduce(data_folder):
     for index in range(len(actions)):
         if actions[index][0] == 0 and actions[index][1] > 0:     # PUT TYPE OF DATA THAT IS IN EXCESS
             select.append(index)
-    select = select[:int(len(select)/2)]
+    select = select[:int(len(select) / 3)]
     actions = np.delete(actions, select, 0)
     observations = np.delete(observations, select, 0)
     #print("len_action= ", actions.shape)
@@ -22,10 +22,10 @@ def data_reduce(data_folder):
         " Acc have been deleted ========")
     print("====================================================")
 
-"""
-#REPEAT FOR KEEP
-    select = []
+    """
+    #REPEAT FOR KEEP
 
+    select = []
     for index in range(len(actions)):
         if(actions[index][0] == 0 and actions[index][1] == 0 and actions[index][2] == 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
             select.append(index)
@@ -36,7 +36,8 @@ def data_reduce(data_folder):
     print("========= Done!, " + str(int(len(select))) + \
         " Keep have been deleted ========")
     print("====================================================")
-"""
+    """
+
     return observations, actions
 
 def plot_acc(data1, name):
@@ -53,7 +54,7 @@ def plot_acc(data1, name):
     plt.savefig(str(name)+'.png')
 
 
-#plot_acc('roverloss.npy', 'roverlossv1')
+plot_acc('roverloss.npy', 'roverloss_vision_set4_&_5')
 
 
 if __name__ == "__main__":
