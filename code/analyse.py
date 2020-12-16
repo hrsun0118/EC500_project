@@ -40,6 +40,7 @@ def data_analyse_seven(data_folder):
             keep += 1
     summ = left+left_throttle+right+right_throttle+acc+brakes+keep
     print("====================================================")
+    print("------------------------ Data_analyse_seven ------------------------")
     print("----------- Data pairs in total =", str(len(actions)), "------------")
     print("----------- Data pairs be used =", str(summ), "-------------")
     print("====================================================")
@@ -52,5 +53,50 @@ def data_analyse_seven(data_folder):
     print("Keep = ", keep)
     print("====================================================")
 
+def data_analyse_ten(data_folder):
+    observations, actions = load_imitations(data_folder)
+    left, left_throttle, left_brake, right, right_throttle, right_brake, throttle_forward, throttle_backward, brakes, keep = 0,0,0,0,0,0,0,0,0,0
+    for action in actions: # [steer, throttle, brake]
+        if action[0] > 0 and action[1] == 0:       # left
+            left += 1
+        elif action[0] > 0 and action[1] > 0:      # left throttle
+            left_throttle += 1
+        elif action[0] > 0 and action[2] > 0:      # left brake
+            left_brake += 1
+        elif action[0] < 0 and action[1] == 0:     # right
+            right += 1
+        elif action[0] < 0 and action[1] > 0:      # right throttle
+            right_throttle += 1
+        elif action[0] > 0 and action[2] > 0:      # right brake
+            right_brake += 1
+        elif action[0] == 0 and action[1] > 0:     # throttle_forward
+            throttle_forward += 1
+        elif action[0] == 0 and action[1] < 0:     # throttle_backward
+            throttle_backward += 1
+        elif action[0] == 0 and action[2] > 0:     # brake
+            brakes += 1
+        elif action[0] == 0 and action[1] == 0 and action[2] == 0:     # keep   #  why do we need "keep" folder?
+            keep += 1
+        else:
+            print("[steer, throttle, brake]: [", action[0],", ", action[1],", ", action[2], "]")
+    summ = left+left_throttle+left_brake+right+right_throttle+right_brake+throttle_forward+throttle_backward+brakes+keep
+    print("====================================================")
+    print("------------------------ Data_analyse_ten -------------------------")
+    print("----------- Data pairs in total =", str(len(actions)), "------------")
+    print("----------- Data pairs be used =", str(summ), "-------------")
+    print("====================================================")
+    print("Left = ", left)
+    print("Left_throttle = ", left_throttle)
+    print("Left_brake = ", left_brake)
+    print("Right = ", right)
+    print("Right_throttle = ", right_throttle)
+    print("Right_brake = ", right_brake)
+    print("Accelerate Forward= ", throttle_forward)
+    print("Accelerate Backward= ", throttle_backward)
+    print("Break = ", brakes)
+    print("Keep = ", keep)
+    print("====================================================")
+
 data_directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project\\code\\data\\"
-data_analyse_seven(data_directory)
+# data_analyse_seven(data_directory)
+data_analyse_ten(data_directory)
