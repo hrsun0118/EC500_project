@@ -1,10 +1,11 @@
 import torch
 import random
 import time
-import os
 from rovernet import ClassificationNetwork
 from roverimitations import load_imitations
+from roverpreprocessing import data_reduce
 import numpy as np
+import os
 
 def train(data_folder, trained_network_file):
     """
@@ -14,10 +15,14 @@ def train(data_folder, trained_network_file):
 
     infer_action.cuda()
 
-    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-4)    # original:1e-5
+    optimizer = torch.optim.Adam(infer_action.parameters(), lr=1e-5)
     # lr change from 1e-2 to 1e-5
     # Optimizer : Adam and SGD and RMSprop(For 4 classes)
     observations, actions = load_imitations(data_folder)
+    #========================================================================
+    #NEW CODE
+    #observations, actions = data_reduce(data_folder)
+    #=========================================================================
     observations = [torch.Tensor(observation) for observation in observations]
     actions = [torch.Tensor(action) for action in actions]
 
@@ -83,6 +88,7 @@ def cross_entropy_loss(batch_out, batch_gt):
     criterion = torch.nn.CrossEntropyLoss()
     target = torch.argmax(batch_gt, 1)
     loss = criterion(batch_out, target)
+
     return loss
 
 directory = "C:\\D drive\\Fall 2020\\EC500\\project\\EC500_project\\code\\"  ######## change that! ########
