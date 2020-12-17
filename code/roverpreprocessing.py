@@ -10,6 +10,8 @@ def data_reduce(data_folder):
     # Reduce data to balance the distribution
     # """
     observations, actions = load_imitations(data_folder)
+
+    """
     select = []
     for index in range(len(actions)):
         if actions[index][0] == 0 and actions[index][1] > 0:     # PUT TYPE OF DATA THAT IS IN EXCESS
@@ -21,22 +23,91 @@ def data_reduce(data_folder):
     print("========= Done!, " + str(int(len(select))) + \
         " Acc have been deleted ========")
     print("====================================================")
-
     """
-    #REPEAT FOR KEEP
 
+    #REPEAT FOR KEEP
     select = []
     for index in range(len(actions)):
         if(actions[index][0] == 0 and actions[index][1] == 0 and actions[index][2] == 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
             select.append(index)
-    select = select[:int(len(select)/2)]
+    select = select[:int(len(select) / 2)]
     actions = np.delete(actions, select, 0)
     observations = np.delete(observations, select, 0)
     #print("len_action= ", actions.shape)
     print("========= Done!, " + str(int(len(select))) + \
         " Keep have been deleted ========")
     print("====================================================")
+
+
+    # REPEAT FOR LEFT
+    select = []
+    for index in range(len(actions)):
+        if(actions[index][0] > 0 and actions[index][1] == 0 and actions[index][2] == 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
+            select.append(index)
+    select = select[:int(len(select))]
+    actions = np.delete(actions, select, 0)
+    observations = np.delete(observations, select, 0)
+    #print("len_action= ", actions.shape)
+    print("========= Done!, " + str(int(len(select))) + \
+        " LEFT have been deleted ========")
+    print("====================================================")
+
+
     """
+    # REPEAT FOR LEFT TROTTLE
+    select = []
+    for index in range(len(actions)):
+        if(actions[index][0] > 0 and actions[index][1] > 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
+            select.append(index)
+    select = select[:int(len(select) / 4)]
+    actions = np.delete(actions, select, 0)
+    observations = np.delete(observations, select, 0)
+    #print("len_action= ", actions.shape)
+    print("========= Done!, " + str(int(len(select))) + \
+        " LEFT_THROTTLE have been deleted ========")
+    print("====================================================")
+    """
+
+
+    # REPEAT FOR RIGHT
+    select = []
+    for index in range(len(actions)):
+        if(actions[index][0] < 0 and actions[index][1] == 0 and actions[index][2] == 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
+            select.append(index)
+    select = select[:int(len(select))]
+    actions = np.delete(actions, select, 0)
+    observations = np.delete(observations, select, 0)
+    #print("len_action= ", actions.shape)
+    print("========= Done!, " + str(int(len(select))) + \
+        " RIGHT have been deleted ========")
+    print("====================================================")
+
+    """
+    # REPEAT FOR RIGHT_THROTTLE
+    select = []
+    for index in range(len(actions)):
+        if(actions[index][0] < 0 and actions[index][1] > 0 and actions[index][2] == 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
+            select.append(index)
+    select = select[:int(len(select) * 33 / 263 )]
+    actions = np.delete(actions, select, 0)
+    observations = np.delete(observations, select, 0)
+    #print("len_action= ", actions.shape)
+    print("========= Done!, " + str(int(len(select))) + \
+        " RIGHT_THROTTLE have been deleted ========")
+    print("====================================================")
+    """
+    # REPEAT FOR BRAKE
+    select = []
+    for index in range(len(actions)):
+        if(actions[index][0] == 0 and actions[index][1] == 0 and actions[index][2] > 0):     # PUT TYPE OF DATA THAT IS IN EXCESS
+            select.append(index)
+    select = select[:int(len(select))]
+    actions = np.delete(actions, select, 0)
+    observations = np.delete(observations, select, 0)
+    #print("len_action= ", actions.shape)
+    print("========= Done!, " + str(int(len(select))) + \
+        " BRAKE have been deleted ========")
+    print("====================================================")
 
     return observations, actions
 
@@ -54,7 +125,7 @@ def plot_acc(data1, name):
     plt.savefig(str(name)+'.png')
 
 
-plot_acc('roverloss.npy', 'roverloss_vision_set4_&_5')
+plot_acc('roverloss.npy', 'roverloss_vision_set6')
 
 
 if __name__ == "__main__":

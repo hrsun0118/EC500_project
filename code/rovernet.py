@@ -125,17 +125,17 @@ class ClassificationNetwork(torch.nn.Module):
         # Eight Classes Classification [steering, throttle, brake]
         max_index = torch.argmax(scores, 1)
         if max_index == 0:
-            action = [0.0, 1.0, 0.0] #throttle
+            action = [0.0, 0.6, 0.0] #throttle
         elif max_index == 1:
             action = [0.0, 0.0, 1.0] #brake
         elif max_index == 2:
-            action = [15.0, 0.0, 0.0] #left
+            action = [5.0, 0.0, 0.0] #left
         elif max_index == 3:
-            action = [-15.0, 0.0, 0.0] #right
+            action = [-5.0, 0.0, 0.0] #right
         elif max_index == 4:
-            action = [15.0, 1.0, 0.0] # throttle left
+            action = [10.0, 0.5, 0.0] # throttle left
         elif max_index == 5:
-            action = [-15.0, 1.0, 0.0] # throttle right
+            action = [-10.0, 0.5, 0.0] # throttle right
         elif max_index == 6:
             action = [0.0, 0.0, 0.0]     # keep - modified to 7 classes
         #=================================================================
