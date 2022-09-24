@@ -7,4 +7,6 @@ Data Collection Process:
 * To turn at the end of a long corridor, we trained the rover to turn at various terrain. Based on the color of the image taken when turning, rover is trained to turn when encountering objects blocking it's field of view.
 * To avoid obstacles, we drove the rover close to different obstacles and purposely turn right/left to train it to turn. Ideally, it's best to turn in only 1 direction to avoid confusion when rover is faced with this situation. As a result, we did multiple trails of training to get the optimal result.
 
-![alt text](https://github.com/hrsun0118/EC500_project)
+<div align="center">
+<img src="./Images/Rover Training Mode.png">
+<p> Mars Rover Simulation - Rover Trainig Mode </p>
