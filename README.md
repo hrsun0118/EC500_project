@@ -1,6 +1,6 @@
 # EC500_project
 
-This folder contains all the essential code that's implemented in the Mars Rover Simulation for autonomous driving. The key ML method used is Imitation Learning(IL). The IL agent is trained through a series of data collection by driving the car around the rover inside the simulation. 
+This folder contains the paper, the presentation and all the src code that's implemented in the Mars Rover Simulation for autonomous driving. The key ML method used is Imitation Learning(IL). The IL agent is trained through a series of data collection by driving the car around the rover inside the simulation. 
 
 Data Collection Process: 
 * To traverse through the long corridor (with Martian mountain walls on the side) inside the simulation, we drove the car closer to the wall.
